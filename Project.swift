@@ -3,7 +3,12 @@ import ProjectDescription
 let project = Project(
     name: "UnownDex",
     layers: [ .init(
-        name: "Model",
+        name: "Data",
+        platform: .iOS,
+        product: .framework,
+        withUnitTests: false
+    ), .init(
+        name: "Service",
         platform: .iOS,
         product: .framework,
         withUnitTests: false
@@ -12,7 +17,7 @@ let project = Project(
         platform: .iOS,
         product: .app,
         dependencies: [ .target(
-            name: "Model"
+            name: "Data"
         ) ]
     ) ]
 )
