@@ -5,16 +5,13 @@ struct ContentView: View {
         Text("Hello, world!")
             .padding()
     }
-
-    func t(a: Int,
-       b: String) {
-    }
 }
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 13 Pro Max")
     }
 }
 #endif

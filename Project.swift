@@ -71,17 +71,23 @@ extension Project {
                 buildAction: .buildAction(
                     targets: [ .init(
                         stringLiteral: name
-                    ) ],
-                    postActions: [ .init(
-                        scriptText: "swiftlint"
-                    ) ],
-                    runPostActionsOnFailure: false
+                    ) ]
                 ),
                 testAction: .targets([ TestableTarget(
                     stringLiteral: "\(name)Tests"
                 ) ]),
                 runAction: .runAction()
             )
+        }
+
+        private let scriptsBasePath = "Scripts"
+
+        private var targetPath: String { "Sources/\(name)" }
+        private var unitTestsPath: String { "Tests/\(name)" }
+        private var uiTestsPath: String { "UITests/\(name)" }
+
+        private func script(_ name: String) -> Path {
+            "\(scriptsBasePath)/swiftlint.sh"
         }
 
         func targets() -> [Target] {
@@ -92,28 +98,43 @@ extension Project {
                 platform: platform,
                 product: product,
                 bundleId: "com.example.\(name)",
-                sources: "Sources/\(name)/**",
+                sources: "\(targetPath)/**",
+                scripts: [ .post(
+                    path: script("swiftlint"),
+                    arguments: [targetPath],
+                    name: "SwiftLint"
+                ) ],
                 dependencies: dependencies
             ))
 
             if withUnitTests {
                 targets.append(Target(
-                    name: "\(name)Tests",
+                    name: "\(name)_Unit_Tests",
                     platform: platform,
                     product: .unitTests,
-                    bundleId: "com.example.\(name).Tests",
-                    sources: "Tests/\(name)Tests/**",
+                    bundleId: "com.example.\(name).UnitTests",
+                    sources: "\(unitTestsPath)/**",
+                    scripts: [ .post(
+                        path: script("swiftlint"),
+                        arguments: [unitTestsPath],
+                        name: "SwiftLint"
+                    ) ],
                     dependencies: [ .target(name: name) ]
                 ))
             }
 
             if withUITests {
                 targets.append(Target(
-                    name: "\(name)UITests",
+                    name: "\(name)_UI_Tests",
                     platform: platform,
                     product: .uiTests,
                     bundleId: "com.example.\(name).UITests",
-                    sources: "Tests/\(name)UITests/**",
+                    sources: "\(uiTestsPath)/**",
+                    scripts: [ .post(
+                        path: script("swiftlint"),
+                        arguments: [uiTestsPath],
+                        name: "SwiftLint"
+                    ) ],
                     dependencies: [ .target(name: name) ]
                 ))
             }
