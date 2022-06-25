@@ -93,3 +93,6 @@ iOSInjectionProject/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+Derived/
+*.xcodeproj/
+*.xcworkspace/
