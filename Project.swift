@@ -73,8 +73,8 @@ extension Project {
                         stringLiteral: name
                     ) ]
                 ),
-                testAction: .targets([ TestableTarget(
-                    stringLiteral: "\(name)_Unit_Tests"
+                testAction: .targets(!withUnitTests ? [] : [ TestableTarget(
+                    stringLiteral: Self.unitTestsTarget(name)
                 ) ]),
                 runAction: .runAction()
             )
@@ -86,6 +86,10 @@ extension Project {
         private var unitTestsPath: String { "Tests/\(name)" }
         private var uiTestsPath: String { "UITests/\(name)" }
 
+        private static func target(_ name: String) -> String { name }
+        private static func unitTestsTarget(_ name: String) -> String { "\(name)_Unit_Tests" }
+        private static func uiTestsTarget(_ name: String) -> String { "\(name)_UI_Tests" }
+
         private func script(_ name: String) -> Path {
             "\(scriptsBasePath)/swiftlint.sh"
         }
@@ -94,7 +98,7 @@ extension Project {
             var targets = [Target]()
 
             targets.append(Target(
-                name: name,
+                name: Self.target(name),
                 platform: platform,
                 product: product,
                 bundleId: "com.example.\(name)",
@@ -109,7 +113,7 @@ extension Project {
 
             if withUnitTests {
                 targets.append(Target(
-                    name: "\(name)_Unit_Tests",
+                    name: Self.unitTestsTarget(name),
                     platform: platform,
                     product: .unitTests,
                     bundleId: "com.example.\(name).UnitTests",
@@ -125,7 +129,7 @@ extension Project {
 
             if withUITests {
                 targets.append(Target(
-                    name: "\(name)_UI_Tests",
+                    name: Self.uiTestsTarget(name),
                     platform: platform,
                     product: .uiTests,
                     bundleId: "com.example.\(name).UITests",
