@@ -74,7 +74,7 @@ extension Project {
                     ) ]
                 ),
                 testAction: .targets([ TestableTarget(
-                    stringLiteral: "\(name)Tests"
+                    stringLiteral: "\(name)_Unit_Tests"
                 ) ]),
                 runAction: .runAction()
             )
