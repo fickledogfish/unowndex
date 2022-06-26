@@ -10,14 +10,15 @@ let project = Project(
     ), .init(
         name: "Service",
         platform: .iOS,
-        product: .framework,
-        withUnitTests: false
+        product: .framework
     ), .init(
         name: "App",
         platform: .iOS,
         product: .app,
         dependencies: [ .target(
             name: "Data"
+        ), .target(
+            name: "Service"
         ) ]
     ) ]
 )
