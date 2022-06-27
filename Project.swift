@@ -10,14 +10,15 @@ let project = Project(
     ), .init(
         name: "Service",
         platform: .iOS,
-        product: .framework,
-        withUnitTests: false
+        product: .framework
     ), .init(
         name: "App",
         platform: .iOS,
         product: .app,
         dependencies: [ .target(
             name: "Data"
+        ), .target(
+            name: "Service"
         ) ]
     ) ]
 )
@@ -35,6 +36,9 @@ extension Project {
 
         self.init(
             name: name,
+            options: .options(
+                automaticSchemesOptions: .enabled(codeCoverageEnabled: true)
+            ),
             targets: targets,
             schemes: layers.map { $0.scheme } + extraSchemes
         )
@@ -91,7 +95,7 @@ extension Project {
         private static func uiTestsTarget(_ name: String) -> String { "\(name)_UI_Tests" }
 
         private func script(_ name: String) -> Path {
-            "\(scriptsBasePath)/swiftlint.sh"
+            "\(scriptsBasePath)/\(name).sh"
         }
 
         func targets() -> [Target] {
