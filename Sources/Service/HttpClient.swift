@@ -5,12 +5,35 @@ internal protocol HttpGettable {
 }
 
 internal struct HttpClient {
+    // TODO: Better errors
+    internal enum HttpError: Error {
+        case cannotGet
+    }
+
+    private let session: URLSession!
+
+    init(
+        urlSessionConfig: URLSessionConfiguration = {
+            let config = URLSessionConfiguration.ephemeral
+            config.httpAdditionalHeaders = [
+                "Accept": "application/json"
+            ]
+
+            return config
+        }()
+    ) {
+        self.session = URLSession(configuration: urlSessionConfig)
+    }
 }
 
 extension HttpClient: HttpGettable {
     func get(_ url: URL) async -> Result<Data, Error> {
-        // swiftlint:disable force_cast
-        .failure("" as! Error)
-        // swiftlint:enable force_cast
+        guard
+            let (data, _) = try? await URLSession.shared.data(from: url)
+        else {
+            return .failure(HttpError.cannotGet)
+        }
+
+        return .success(data)
     }
 }
