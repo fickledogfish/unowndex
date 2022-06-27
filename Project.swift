@@ -92,7 +92,7 @@ extension Project {
         private static func uiTestsTarget(_ name: String) -> String { "\(name)_UI_Tests" }
 
         private func script(_ name: String) -> Path {
-            "\(scriptsBasePath)/swiftlint.sh"
+            "\(scriptsBasePath)/\(name).sh"
         }
 
         func targets() -> [Target] {

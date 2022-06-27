@@ -15,12 +15,17 @@ if test -z "$pathToBeLinted"; then
 	exit 1
 fi
 
+if test -z "$SRCROOT"; then
+	echo '$SRCROOT undefined'
+	exit 1
+fi
+
 if test -d '/opt/homebrew/bin/'; then
 	PATH="/opt/homebrew/bin/:${PATH}"
 fi
 
 if which swiftlint >/dev/null; then
-	swiftlint "$pathToBeLinted"
+	swiftlint "$SRCROOT/$pathToBeLinted"
 else
 	echo 'warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint'
 fi

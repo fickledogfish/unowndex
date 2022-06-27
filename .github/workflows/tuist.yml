@@ -24,4 +24,4 @@ jobs:
         run: swiftlint Sources/ Tests/ UITests/
 
       - name: Run tests
-        run: tuist test
+        run: tuist test -c --skip-ui-tests
