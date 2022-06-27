@@ -36,6 +36,9 @@ extension Project {
 
         self.init(
             name: name,
+            options: .options(
+                automaticSchemesOptions: .enabled(codeCoverageEnabled: true)
+            ),
             targets: targets,
             schemes: layers.map { $0.scheme } + extraSchemes
         )
