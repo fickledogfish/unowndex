@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum TypeInfo: String, CaseIterable {
+public enum PokemonType: String, CaseIterable {
     case normal
     case fire
     case water
@@ -108,9 +108,9 @@ internal extension Color {
 
 #if DEBUG
 @available(iOS 13, macOS 11.0, *)
-struct TypeInfoColor_Previews: PreviewProvider {
+struct PokemonTypeColor_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(TypeInfo.allCases, id: \.self) { type in
+        ForEach(PokemonType.allCases, id: \.self) { type in
             Text(type.rawValue)
                 .frame(width: 120, height: 30, alignment: .center)
                 .foregroundColor(type.foregroundColor)

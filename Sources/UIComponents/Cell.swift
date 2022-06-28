@@ -28,7 +28,7 @@ public struct Cell: View {
                 }
             }
 
-            TypeInfoCell(.grass, .fire)
+            TypeBadge(.grass, .fire)
         }
     }
 }

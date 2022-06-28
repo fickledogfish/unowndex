@@ -1,27 +1,31 @@
 import SwiftUI
 
 @available(iOS 13, macOS 10.15, *)
-public struct TypeInfoCell: View {
-    private let type1: TypeInfo
-    private let type2: TypeInfo?
+public struct TypeBadge: View {
+    private let type1: PokemonType
+    private let type2: PokemonType?
 
-    init(_ type1: TypeInfo, _ type2: TypeInfo) {
+    private let font = Font.caption
+        .weight(.semibold)
+
+    private let typeCellWidth = 60.0
+    private let height = 25.0
+    private let horizontalPadding = 6.0
+
+    init(_ type1: PokemonType, _ type2: PokemonType) {
         self.type1 = type1
         self.type2 = type2
     }
 
-    init(_ type: TypeInfo) {
+    init(_ type: PokemonType) {
         self.type1 = type
         self.type2 = nil
     }
 
-    private let typeCellWidth = 70.0
-    private let height = 30.0
-    private let horizontalPadding = 10.0
-
     public var body: some View {
         HStack {
             Text(type1.rawValue)
+                .font(font)
                 .foregroundColor(type1.foregroundColor)
                 .padding(.horizontal, type2 == nil ? 0 : horizontalPadding)
                 .frame(
@@ -31,6 +35,7 @@ public struct TypeInfoCell: View {
 
             if let type2 = type2 {
                 Text(type2.rawValue)
+                    .font(font)
                     .foregroundColor(type2.foregroundColor)
                     .padding(.trailing, horizontalPadding)
                     .frame(width: typeCellWidth, height: height, alignment: .center)
@@ -45,10 +50,10 @@ public struct TypeInfoCell: View {
             Capsule().fill(LinearGradient(
                 gradient: Gradient(stops: [ .init(
                     color: type1.backgroundColor,
-                    location: 0.48
+                    location: 0.46
                 ), .init(
                     color: type2?.backgroundColor ?? type1.backgroundColor,
-                    location: 0.52
+                    location: 0.54
                 ) ] ),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
@@ -63,16 +68,16 @@ struct TypeInfoCell_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             Group {
-                TypeInfoCell(.grass)
+                TypeBadge(.grass)
 
-                TypeInfoCell(.fighting, .electric)
+                TypeBadge(.fighting, .electric)
             }
             .preferredColorScheme(.light)
 
             Group {
-                TypeInfoCell(.grass)
+                TypeBadge(.grass)
 
-                TypeInfoCell(.water, .ice)
+                TypeBadge(.water, .ice)
             }
             .preferredColorScheme(.dark)
         }
