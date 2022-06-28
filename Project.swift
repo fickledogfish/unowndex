@@ -15,6 +15,9 @@ let project = Project(
         name: "UIComponents",
         platform: .iOS,
         product: .framework,
+        dependencies: [
+            .external(name: "Kingfisher")
+        ],
         withUnitTests: false,
         withUITests: false
     ), .init(
