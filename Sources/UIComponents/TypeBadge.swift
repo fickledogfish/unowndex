@@ -19,7 +19,7 @@ public struct TypeBadge: View {
 
     init(_ type1: PokemonType, _ type2: PokemonType) {
         self.type1 = type1
-        self.type2 = type2
+        self.type2 = type1 == type2 ? nil : type2
     }
 
     public var body: some View {
@@ -30,7 +30,8 @@ public struct TypeBadge: View {
                 .padding(.horizontal, type2 == nil ? 0 : horizontalPadding)
                 .frame(
                     width: type2 == nil ? typeCellWidth * 2 : typeCellWidth + horizontalPadding,
-                    height: height, alignment: .center
+                    height: height,
+                    alignment: .center
                 )
 
             if let type2 = type2 {
@@ -38,7 +39,11 @@ public struct TypeBadge: View {
                     .font(font)
                     .foregroundColor(type2.foregroundColor)
                     .padding(.trailing, horizontalPadding)
-                    .frame(width: typeCellWidth, height: height, alignment: .center)
+                    .frame(
+                        width: typeCellWidth,
+                        height: height,
+                        alignment: .center
+                    )
             }
         }
         .frame(
@@ -80,6 +85,19 @@ struct TypeInfoCell_Previews: PreviewProvider {
                 TypeBadge(.water, .ice)
             }
             .preferredColorScheme(.dark)
+
+            Group { VStack { ForEach(
+                PokemonType.allCases.shuffled().prefix(3),
+                id: \.self
+            ) { type1 in
+                HStack { ForEach(
+                    PokemonType.allCases.shuffled().prefix(2),
+                    id: \.self
+                ) { type2 in
+                    TypeBadge(type1, type2)
+                } }
+            } } }
+            .previewDisplayName("Random combinations")
         }
         .padding()
         .previewLayout(.sizeThatFits)
