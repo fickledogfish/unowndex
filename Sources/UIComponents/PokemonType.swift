@@ -98,17 +98,15 @@ public enum PokemonType: String, CaseIterable {
 @available(iOS 13, macOS 11.0, *)
 struct PokemonTypeColor_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(PokemonType.allCases, id: \.self) { type in
+        VStack { ForEach(PokemonType.allCases, id: \.self) { type in
             Text(type.rawValue)
                 .frame(width: 120, height: 30, alignment: .center)
                 .foregroundColor(type.foregroundColor)
-                .background(
-                    Capsule()
-                        .fill(type.backgroundColor)
-                )
-                .padding()
-                .previewLayout(.sizeThatFits)
-        }
+                .background(Capsule().fill(type.backgroundColor))
+        } }
+        .previewDisplayName("Background and foreground colors")
+        .padding()
+        .previewLayout(.sizeThatFits)
     }
 }
 #endif
