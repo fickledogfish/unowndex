@@ -12,14 +12,14 @@ public struct TypeBadge: View {
     private let height = 25.0
     private let horizontalPadding = 6.0
 
-    init(_ type1: PokemonType, _ type2: PokemonType) {
-        self.type1 = type1
-        self.type2 = type2
-    }
-
     init(_ type: PokemonType) {
         self.type1 = type
         self.type2 = nil
+    }
+
+    init(_ type1: PokemonType, _ type2: PokemonType) {
+        self.type1 = type1
+        self.type2 = type2
     }
 
     public var body: some View {
