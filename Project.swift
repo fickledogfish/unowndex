@@ -12,7 +12,7 @@ let project = Project(
         platform: .iOS,
         product: .framework
     ), .init(
-        name: "UI Components",
+        name: "UIComponents",
         platform: .iOS,
         product: .framework,
         withUnitTests: false,
@@ -91,8 +91,6 @@ extension Project {
         }
 
         private static func targetName(for product: Product, with name: String) -> String {
-            let name = name.replacingOccurrences(of: " ", with: "_")
-
             switch product {
             case .framework, .app:
                 return "\(name)"
