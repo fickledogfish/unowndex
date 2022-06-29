@@ -5,8 +5,7 @@ let project = Project(
     layers: [ .init(
         name: "Data",
         platform: .iOS,
-        product: .framework,
-        withUnitTests: false
+        product: .framework
     ), .init(
         name: "Service",
         platform: .iOS,
@@ -15,9 +14,11 @@ let project = Project(
         name: "UIComponents",
         platform: .iOS,
         product: .framework,
-        dependencies: [
-            .external(name: "Kingfisher")
-        ],
+        dependencies: [ .external(
+            name: "Kingfisher"
+        ), .target(
+            name: "Data"
+        ) ],
         withUnitTests: false,
         withUITests: false
     ), .init(

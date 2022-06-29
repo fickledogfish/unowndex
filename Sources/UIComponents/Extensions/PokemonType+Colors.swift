@@ -1,26 +1,9 @@
 import SwiftUI
 
-public enum PokemonType: String, CaseIterable {
-    case normal
-    case fire
-    case water
-    case grass
-    case electric
-    case ice
-    case fighting
-    case poision
-    case ground
-    case flying
-    case psychic
-    case bug
-    case rock
-    case ghost
-    case dark
-    case dragon
-    case steel
-    case fairy
+import Data
 
-    public var foregroundColor: Color {
+internal extension PokemonType {
+    var foregroundColor: Color {
         guard let bgColor = self.backgroundColor.cgColor?.components else {
             return .black
         }
@@ -35,7 +18,7 @@ public enum PokemonType: String, CaseIterable {
         return luminosity > (186/255) ? .black : .white
     }
 
-    public var backgroundColor: Color {
+    var backgroundColor: Color {
         switch self {
         case .normal:
             return Color(hex: 0xA8A878)

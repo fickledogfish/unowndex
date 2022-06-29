@@ -1,5 +1,7 @@
 import SwiftUI
 
+import Data
+
 @available(iOS 13, macOS 10.15, *)
 public struct TypeBadge: View {
     private let type1: PokemonType
