@@ -90,7 +90,7 @@ extension Project {
                     ) ]
                 ),
                 testAction: .targets(!withUnitTests ? [] : [ TestableTarget(
-                    stringLiteral: Self.targetName(for: product, with: name)
+                    stringLiteral: Self.targetName(for: .unitTests, with: name)
                 ) ]),
                 runAction: .runAction()
             )

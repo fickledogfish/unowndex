@@ -1,6 +1,4 @@
-import SwiftUI
-
-public enum PokemonType: String, CaseIterable {
+public enum PokemonType: String, CaseIterable, Decodable {
     case normal
     case fire
     case water
