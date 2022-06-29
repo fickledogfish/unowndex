@@ -12,17 +12,15 @@ internal struct HttpClient {
 
     private let session: URLSession
 
-    internal init(
-        urlSessionConfig: URLSessionConfiguration = {
+    internal init() {
+        self.session = URLSession(configuration: {
             let config = URLSessionConfiguration.ephemeral
             config.httpAdditionalHeaders = [
                 "Accept": "application/json"
             ]
 
             return config
-        }()
-    ) {
-        self.session = URLSession(configuration: urlSessionConfig)
+        }())
     }
 }
 
