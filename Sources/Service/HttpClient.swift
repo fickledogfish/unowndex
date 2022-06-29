@@ -10,7 +10,7 @@ internal struct HttpClient {
         case cannotGet
     }
 
-    private let session: URLSession!
+    private let session: URLSession
 
     init(
         urlSessionConfig: URLSessionConfiguration = {
@@ -29,7 +29,7 @@ internal struct HttpClient {
 extension HttpClient: HttpGettable {
     func get(_ url: URL) async -> Result<Data, Error> {
         guard
-            let (data, _) = try? await URLSession.shared.data(from: url)
+            let (data, _) = try? await session.data(from: url)
         else {
             return .failure(HttpError.cannotGet)
         }

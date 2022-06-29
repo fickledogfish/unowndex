@@ -5,12 +5,22 @@ let project = Project(
     layers: [ .init(
         name: "Data",
         platform: .iOS,
-        product: .framework,
-        withUnitTests: false
+        product: .framework
     ), .init(
         name: "Service",
         platform: .iOS,
         product: .framework
+    ), .init(
+        name: "UIComponents",
+        platform: .iOS,
+        product: .framework,
+        dependencies: [ .external(
+            name: "Kingfisher"
+        ), .target(
+            name: "Data"
+        ) ],
+        withUnitTests: false,
+        withUITests: false
     ), .init(
         name: "App",
         platform: .iOS,
@@ -19,6 +29,8 @@ let project = Project(
             name: "Data"
         ), .target(
             name: "Service"
+        ), .target(
+            name: "UIComponents"
         ) ]
     ) ]
 )
@@ -78,38 +90,68 @@ extension Project {
                     ) ]
                 ),
                 testAction: .targets(!withUnitTests ? [] : [ TestableTarget(
-                    stringLiteral: Self.unitTestsTarget(name)
+                    stringLiteral: Self.targetName(for: .unitTests, with: name)
                 ) ]),
                 runAction: .runAction()
             )
         }
 
-        private let scriptsBasePath = "Scripts"
+        private static func targetName(for product: Product, with name: String) -> String {
+            switch product {
+            case .framework, .app:
+                return "\(name)"
 
-        private var targetPath: String { "Sources/\(name)" }
-        private var unitTestsPath: String { "Tests/\(name)" }
-        private var uiTestsPath: String { "UITests/\(name)" }
+            case .unitTests:
+                return "\(name)_Unit_Tests"
 
-        private static func target(_ name: String) -> String { name }
-        private static func unitTestsTarget(_ name: String) -> String { "\(name)_Unit_Tests" }
-        private static func uiTestsTarget(_ name: String) -> String { "\(name)_UI_Tests" }
+            case .uiTests:
+                return "\(name)_UI_Tests"
+
+            default:
+                fatalError()
+            }
+        }
+
+        private static func bundleId(for product: Product, with name: String) -> String {
+            let targetName = Self
+                .targetName(for: product, with: name)
+                .replacingOccurrences(of: "_", with: "-")
+
+            return "com.example.\(targetName)"
+        }
+
+        private static func path(for product: Product, with name: String) -> String {
+            switch product {
+            case .framework, .app:
+                return "Sources/\(name)"
+
+            case .unitTests:
+                return "Tests/\(name)"
+
+            case .uiTests:
+                return "UITests/\(name)"
+
+            default:
+                fatalError()
+            }
+        }
 
         private func script(_ name: String) -> Path {
-            "\(scriptsBasePath)/\(name).sh"
+            "Scripts/\(name).sh"
         }
 
         func targets() -> [Target] {
             var targets = [Target]()
 
             targets.append(Target(
-                name: Self.target(name),
+                name: Self.targetName(for: product, with: name),
                 platform: platform,
                 product: product,
-                bundleId: "com.example.\(name)",
-                sources: "\(targetPath)/**",
+                bundleId: Self.bundleId(for: product, with: name),
+                sources: "\(Self.path(for: product, with: name))/**",
                 scripts: [ .post(
                     path: script("swiftlint"),
-                    arguments: [targetPath],
+                    arguments: [Self.path(for: product, with: name)],
                     name: "SwiftLint"
                 ) ],
                 dependencies: dependencies
@@ -117,14 +159,14 @@ extension Project {
 
             if withUnitTests {
                 targets.append(Target(
-                    name: Self.unitTestsTarget(name),
+                    name: Self.targetName(for: .unitTests, with: name),
                     platform: platform,
                     product: .unitTests,
-                    bundleId: "com.example.\(name).UnitTests",
-                    sources: "\(unitTestsPath)/**",
+                    bundleId: Self.bundleId(for: .unitTests, with: name),
+                    sources: "\(Self.path(for: .unitTests, with: name))/**",
                     scripts: [ .post(
                         path: script("swiftlint"),
-                        arguments: [unitTestsPath],
+                        arguments: [Self.path(for: .unitTests, with: name)],
                         name: "SwiftLint"
                     ) ],
                     dependencies: [ .target(name: name) ]
@@ -133,14 +175,14 @@ extension Project {
 
             if withUITests {
                 targets.append(Target(
-                    name: Self.uiTestsTarget(name),
+                    name: Self.targetName(for: .uiTests, with: name),
                     platform: platform,
                     product: .uiTests,
-                    bundleId: "com.example.\(name).UITests",
-                    sources: "\(uiTestsPath)/**",
+                    bundleId: Self.bundleId(for: .uiTests, with: name),
+                    sources: "\(Self.path(for: .uiTests, with: name)))/**",
                     scripts: [ .post(
                         path: script("swiftlint"),
-                        arguments: [uiTestsPath],
+                        arguments: [Self.path(for: .uiTests, with: name)],
                         name: "SwiftLint"
                     ) ],
                     dependencies: [ .target(name: name) ]
