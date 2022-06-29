@@ -1,6 +1,6 @@
 @testable import Service
 
-struct Example {
+struct SampleData {
     private init() {}
 
     public static let pokemonInfoDto = PokemonInfoDto(

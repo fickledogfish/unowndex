@@ -19,8 +19,8 @@ final class PokeAPITests: XCTestCase {
         httpClientMock.getWith = { _ in
             .success("""
             {
-                "id": \(Example.pokemonInfoDto.id),
-                "name": "\(Example.pokemonInfoDto.name)"
+                "id": \(SampleData.pokemonInfoDto.id),
+                "name": "\(SampleData.pokemonInfoDto.name)"
             }
             """.data(using: .utf8)!)
         }
@@ -57,11 +57,11 @@ final class PokeAPITests: XCTestCase {
 
     func testPokemonNationalDexShouldDecodeTheDataReturnedByTheHttpClient() async {
         // Act
-        let result = await sut.pokemon(nationalDexId: Example.pokemonInfoDto.id)
+        let result = await sut.pokemon(nationalDexId: SampleData.pokemonInfoDto.id)
 
         // Assert
         XCTAssertNotNil(result)
-        XCTAssertEqual(result?.id, Example.pokemonInfoDto.id)
-        XCTAssertEqual(result?.name, Example.pokemonInfoDto.name)
+        XCTAssertEqual(result?.id, SampleData.pokemonInfoDto.id)
+        XCTAssertEqual(result?.name, SampleData.pokemonInfoDto.name)
     }
 }

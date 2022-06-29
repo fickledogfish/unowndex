@@ -15,7 +15,7 @@ final class PokemonServiceTests: XCTestCase {
     func testInfoShouldRouteTheInformationReturnedByTheAPI() async {
         // Arrange
         api.pokemonNationalDexIdWith = { _ in
-            Example.pokemonInfoDto
+            SampleData.pokemonInfoDto
         }
 
         // Act
@@ -23,6 +23,6 @@ final class PokemonServiceTests: XCTestCase {
 
         // Assert
         XCTAssertNotNil(pokemon)
-        XCTAssertEqual(pokemon?.id, Example.pokemonInfoDto.id)
+        XCTAssertEqual(pokemon?.id, SampleData.pokemonInfoDto.id)
     }
 }
