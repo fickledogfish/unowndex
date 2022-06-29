@@ -19,7 +19,7 @@ internal struct PokeAPI: PokeAPIQueryable {
         self.decoder = decoder
     }
 
-    func pokemon(nationalDexId: Int) async -> PokemonInfoDto? {
+    internal func pokemon(nationalDexId: Int) async -> PokemonInfoDto? {
         let url = baseUrl
             .appendingPathComponent("pokemon")
             .appendingPathComponent(String(nationalDexId))

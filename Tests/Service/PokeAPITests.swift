@@ -4,7 +4,10 @@ import XCTest
 @testable import Service
 
 final class PokeAPITests: XCTestCase {
-    private var pokemon = PokemonInfoDto(id: 495, name: "snivy")
+    private let pokemonMock = PokemonInfoDto(
+        id: 495,
+        name: "snivy"
+    )
 
     private var httpClientMock: HttpClientMock!
     private var decoderMock: DecoderMock!
@@ -25,8 +28,8 @@ final class PokeAPITests: XCTestCase {
 
             return .success("""
                 {
-                    "id": \(this.pokemon.id),
-                    "name": "\(this.pokemon.name)"
+                    "id": \(this.pokemonMock.id),
+                    "name": "\(this.pokemonMock.name)"
                 }
                 """.data(using: .utf8)!)
         }
@@ -63,11 +66,11 @@ final class PokeAPITests: XCTestCase {
 
     func testPokemonNationalDexShouldDecodeTheDataReturnedByTheHttpClient() async {
         // Act
-        let result = await sut.pokemon(nationalDexId: pokemon.id)
+        let result = await sut.pokemon(nationalDexId: pokemonMock.id)
 
         // Assert
         XCTAssertNotNil(result)
-        XCTAssertEqual(result?.id, pokemon.id)
-        XCTAssertEqual(result?.name, pokemon.name)
+        XCTAssertEqual(result?.id, pokemonMock.id)
+        XCTAssertEqual(result?.name, pokemonMock.name)
     }
 }
