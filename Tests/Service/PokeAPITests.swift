@@ -4,11 +4,6 @@ import XCTest
 @testable import Service
 
 final class PokeAPITests: XCTestCase {
-    private let pokemonMock = PokemonInfoDto(
-        id: 495,
-        name: "snivy"
-    )
-
     private var httpClientMock: HttpClientMock!
     private var decoderMock: DecoderMock!
     private var sut: PokeAPI!
@@ -21,17 +16,13 @@ final class PokeAPITests: XCTestCase {
             try JSONDecoder().decode(PokemonInfoDto.self, from: $0)
         }
 
-        httpClientMock.getWith = { [weak self] _ in
-            guard let this = self else {
-                return .failure(HttpClientMock.MockError.genericError)
+        httpClientMock.getWith = { _ in
+            .success("""
+            {
+                "id": \(Example.pokemonInfoDto.id),
+                "name": "\(Example.pokemonInfoDto.name)"
             }
-
-            return .success("""
-                {
-                    "id": \(this.pokemonMock.id),
-                    "name": "\(this.pokemonMock.name)"
-                }
-                """.data(using: .utf8)!)
+            """.data(using: .utf8)!)
         }
 
         sut = PokeAPI(
@@ -66,11 +57,11 @@ final class PokeAPITests: XCTestCase {
 
     func testPokemonNationalDexShouldDecodeTheDataReturnedByTheHttpClient() async {
         // Act
-        let result = await sut.pokemon(nationalDexId: pokemonMock.id)
+        let result = await sut.pokemon(nationalDexId: Example.pokemonInfoDto.id)
 
         // Assert
         XCTAssertNotNil(result)
-        XCTAssertEqual(result?.id, pokemonMock.id)
-        XCTAssertEqual(result?.name, pokemonMock.name)
+        XCTAssertEqual(result?.id, Example.pokemonInfoDto.id)
+        XCTAssertEqual(result?.name, Example.pokemonInfoDto.name)
     }
 }

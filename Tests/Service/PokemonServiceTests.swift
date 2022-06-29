@@ -3,11 +3,6 @@ import XCTest
 @testable import Service
 
 final class PokemonServiceTests: XCTestCase {
-    private let pokemonMock = PokemonInfoDto(
-        id: 618,
-        name: "stunfisk"
-    )
-
     private var api: PokeAPIMock!
     private var sut: PokemonService!
 
@@ -19,8 +14,8 @@ final class PokemonServiceTests: XCTestCase {
 
     func testInfoShouldRouteTheInformationReturnedByTheAPI() async {
         // Arrange
-        api.pokemonNationalDexIdWith = { [weak self] _ in
-            self?.pokemonMock
+        api.pokemonNationalDexIdWith = { _ in
+            Example.pokemonInfoDto
         }
 
         // Act
@@ -28,6 +23,6 @@ final class PokemonServiceTests: XCTestCase {
 
         // Assert
         XCTAssertNotNil(pokemon)
-        XCTAssertEqual(pokemon?.id, pokemonMock.id)
+        XCTAssertEqual(pokemon?.id, Example.pokemonInfoDto.id)
     }
 }
