@@ -2,7 +2,7 @@ import SwiftUI
 
 @available(iOS 13, macOS 10.15, *)
 internal extension Color {
-    init(hex: UInt, alpha: Double = 1) {
+    init(hex: UInt) {
         self.init(
             .sRGB,
             red: Double((hex >> 16) & 0xFF) / 255,
