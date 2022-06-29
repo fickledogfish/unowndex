@@ -12,7 +12,7 @@ internal struct HttpClient {
 
     private let session: URLSession
 
-    init(
+    internal init(
         urlSessionConfig: URLSessionConfiguration = {
             let config = URLSessionConfiguration.ephemeral
             config.httpAdditionalHeaders = [

@@ -1,4 +1,4 @@
-public enum PokemonType: String, CaseIterable, Decodable {
+public enum PokemonType: String, CaseIterable {
     case normal
     case fire
     case water

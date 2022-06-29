@@ -9,7 +9,10 @@ let project = Project(
     ), .init(
         name: "Service",
         platform: .iOS,
-        product: .framework
+        product: .framework,
+        dependencies: [ .target(
+            name: "Data"
+        ) ]
     ), .init(
         name: "UIComponents",
         platform: .iOS,

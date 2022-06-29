@@ -4,7 +4,7 @@ import XCTest
 @testable import Service
 
 final class PokeAPITests: XCTestCase {
-    private var pokemon = Pokemon(id: 495, name: "snivy")
+    private var pokemon = PokemonInfoDto(id: 495, name: "snivy")
 
     private var httpClientMock: HttpClientMock!
     private var decoderMock: DecoderMock!
@@ -15,7 +15,7 @@ final class PokeAPITests: XCTestCase {
         decoderMock = DecoderMock()
 
         decoderMock.decodeWith = {
-            try JSONDecoder().decode(Pokemon.self, from: $0)
+            try JSONDecoder().decode(PokemonInfoDto.self, from: $0)
         }
 
         httpClientMock.getWith = { [weak self] _ in
