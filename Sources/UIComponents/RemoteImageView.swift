@@ -23,11 +23,4 @@ public struct RemoteImageView<Placeholder: View>: View {
             .placeholder(placeholder)
             .scaledToFit()
     }
-
-    public mutating func placeholder(
-        @ViewBuilder _ view: @escaping () -> Placeholder
-    ) -> Self {
-        self.placeholder = view
-        return self
-    }
 }
