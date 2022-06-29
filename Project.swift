@@ -28,6 +28,8 @@ let project = Project(
             name: "Data"
         ), .target(
             name: "Service"
+        ), .target(
+            name: "UIComponents"
         ) ]
     ) ]
 )

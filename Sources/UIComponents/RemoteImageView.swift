@@ -5,7 +5,7 @@ public struct RemoteImageView<Placeholder: View>: View {
     private let url: URL
     private var placeholder: () -> Placeholder
 
-    init(
+    public init(
         _ url: URL,
         @ViewBuilder placeholder: @escaping () -> Placeholder
     ) {
@@ -13,14 +13,15 @@ public struct RemoteImageView<Placeholder: View>: View {
         self.placeholder = placeholder
     }
 
-    init(_ url: URL) where Placeholder == ProgressView<EmptyView, EmptyView> {
+    public init(_ url: URL) where Placeholder == ProgressView<EmptyView, EmptyView> {
         self.init(url, placeholder: { ProgressView() })
     }
 
     public var body: some View {
-        KFImage
+        KFAnimatedImage
             .url(url)
             .placeholder(placeholder)
+            .scaledToFit()
     }
 
     public mutating func placeholder(

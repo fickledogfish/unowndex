@@ -1,9 +1,18 @@
 import SwiftUI
+import UIComponents
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            Text("Hello, world!")
+                .padding()
+
+            RemoteImageView(URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/495.gif")!)
+                .frame(width: 50, height: 50, alignment: .center)
+
+            RemoteImageView(URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/4.png")!)
+                .frame(width: 50, height: 50, alignment: .center)
+        }
     }
 }
 
