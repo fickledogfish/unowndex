@@ -3,7 +3,9 @@ import XCTest
 
 @testable import Service
 
-final class PokeAPITests: XCTestCase {
+// MARK: - PokeAPI.pokemon
+
+final class PokeAPIPokemonTests: XCTestCase {
     private var httpClientMock: HttpClientMock!
     private var decoderMock: DecoderMock!
     private var sut: PokeAPI!
@@ -60,5 +62,43 @@ final class PokeAPITests: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertEqual(result?.id, SampleData.pokemonInfoDto.id)
         XCTAssertEqual(result?.name, SampleData.pokemonInfoDto.name)
+    }
+}
+
+// MARK: - PokeAPI.pokemonSpecies
+
+final class PokeAPIPokemonSpeciesTests: XCTestCase {
+    private var httpClientMock: HttpClientMock!
+    private var decoderMock: DecoderMock!
+    private var sut: PokeAPI!
+
+    override func setUp() {
+        httpClientMock = HttpClientMock()
+        decoderMock = DecoderMock()
+
+        decoderMock.decodeWith = {
+            try JSONDecoder().decode(PokemonSpeciesInfoDto.self, from: $0)
+        }
+
+        httpClientMock.getWith = { _ in
+            // swiftlint:disable force_try
+            .success(try! JSONEncoder().encode(SampleData.pokemonSpeciesInfoDto))
+            // swiftlint:enable force_try
+        }
+
+        sut = PokeAPI(
+            httpClient: httpClientMock,
+            decoder: decoderMock
+        )
+    }
+
+    func testPokemonSpeciesNationalDexShouldDecodeTheDataReturnedByTheHttpClient() async {
+        // Act
+        let result = await sut.pokemonSpecies(
+            nationalDexId: SampleData.pokemonSpeciesInfoDto.id
+        )
+
+        // Assert
+        XCTAssertEqual(result?.id, SampleData.pokemonSpeciesInfoDto.id)
     }
 }

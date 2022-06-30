@@ -22,4 +22,9 @@ struct SampleData {
             )
         ) ]
     )
+
+    public static let pokemonSpeciesInfoDto = PokemonSpeciesInfoDto(
+        id: 156,
+        name: "quilava"
+    )
 }
