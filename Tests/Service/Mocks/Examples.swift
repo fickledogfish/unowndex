@@ -1,3 +1,5 @@
+import Foundation
+
 @testable import Service
 
 struct SampleData {
@@ -5,6 +7,19 @@ struct SampleData {
 
     public static let pokemonInfoDto = PokemonInfoDto(
         id: 618,
-        name: "stunfisk"
+        name: "stunfisk",
+        types: [ .init(
+            slot: 1,
+            type: .init(
+                name: .ground,
+                url: URL(string: "https://pokeapi.co/api/v2/type/5/")!
+            )
+        ), .init(
+            slot: 2,
+            type: .init(
+                name: .electric,
+                url: URL(string: "https://pokeapi.co/api/v2/type/13/")!
+            )
+        ) ]
     )
 }

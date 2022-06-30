@@ -5,14 +5,15 @@ import Data
 internal struct PokemonInfoDto: Decodable {
     let id: Int
     let name: String
-}
+    let types: [TypeSlotDto]
 
-internal struct PokemonTypeSlotDto: Decodable {
-    let slot: Int
-    let type: PokemonTypeDto
-}
+    internal struct TypeSlotDto: Decodable {
+        let slot: Int
+        let type: TypeDto
+    }
 
-internal struct PokemonTypeDto: Decodable {
-    let name: PokemonType
-    let url: URL
+    internal struct TypeDto: Decodable {
+        let name: PokemonType
+        let url: URL
+    }
 }

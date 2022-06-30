@@ -17,12 +17,9 @@ final class PokeAPITests: XCTestCase {
         }
 
         httpClientMock.getWith = { _ in
-            .success("""
-            {
-                "id": \(SampleData.pokemonInfoDto.id),
-                "name": "\(SampleData.pokemonInfoDto.name)"
-            }
-            """.data(using: .utf8)!)
+            // swiftlint:disable force_try
+            .success(try! JSONEncoder().encode(SampleData.pokemonInfoDto))
+            // swiftlint:enable force_try
         }
 
         sut = PokeAPI(
