@@ -6,4 +6,10 @@ final class PokeAPIMock: PokeAPIQueryable {
     public func pokemon(nationalDexId: Int) async -> PokemonInfoDto? {
         pokemonNationalDexIdWith(nationalDexId)
     }
+
+    public var pokemonSpeciesNationalDexIdWith: (Int) -> PokemonSpeciesInfoDto? = { _ in nil }
+
+    public func pokemonSpecies(nationalDexId: Int) async -> PokemonSpeciesInfoDto? {
+        pokemonSpeciesNationalDexIdWith(nationalDexId)
+    }
 }
