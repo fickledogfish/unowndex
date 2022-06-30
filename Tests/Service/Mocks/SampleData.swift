@@ -25,6 +25,18 @@ struct SampleData {
 
     public static let pokemonSpeciesInfoDto = PokemonSpeciesInfoDto(
         id: 156,
-        name: "quilava"
+        name: "quilava",
+        flavorTextEntries: [ .init(
+            flavorText: "Be careful if it turns its back during battle. " +
+                "It means that it will attack with the fire on its back.",
+            language: .init(
+                name: .english,
+                url: URL(string: "https://pokeapi.co/api/v2/language/9/")!
+            ),
+            version: .init(
+                name: .gold,
+                url: URL(string: "https://pokeapi.co/api/v2/version/4/")!
+            )
+        ) ]
     )
 }
