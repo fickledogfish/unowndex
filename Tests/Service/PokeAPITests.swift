@@ -56,7 +56,7 @@ final class PokeAPIPokemonTests: XCTestCase {
         )
     }
 
-    func testPokemonNationalDexShouldDecodeTheDataReturnedByTheHttpClient() async {
+    func testPokemonNationalDexIdShouldDecodeTheDataReturnedByTheHttpClient() async {
         // Act
         let result = await sut.pokemon(nationalDexId: SampleData.pokemonInfoDto.id)
 
@@ -92,6 +92,16 @@ final class PokeAPIPokemonTests: XCTestCase {
         )
     }
 
+    func testPokemonNameShouldDecodeTheDataReturnedByTheHttpClient() async {
+        // Act
+        let result = await sut.pokemon(name: SampleData.pokemonInfoDto.name)
+
+        // Assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result?.id, SampleData.pokemonInfoDto.id)
+        XCTAssertEqual(result?.name, SampleData.pokemonInfoDto.name)
+        XCTAssertEqual(result?.types, SampleData.pokemonInfoDto.types)
+    }
 }
 
 // MARK: - PokeAPI.pokemonSpecies
