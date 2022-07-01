@@ -20,6 +20,8 @@ internal struct PokeAPI: PokeAPIQueryable {
         self.decoder = decoder
     }
 
+    // MARK: - /pokemon
+
     internal func pokemon(nationalDexId: Int) async -> PokemonInfoDto? {
         let url = baseUrl
             .appendingPathComponent("pokemon")
@@ -33,6 +35,22 @@ internal struct PokeAPI: PokeAPIQueryable {
             return nil
         }
     }
+
+    internal func pokemon(name: String) async -> PokemonInfoDto? {
+        let url = baseUrl
+            .appendingPathComponent("pokemon")
+            .appendingPathComponent(name)
+
+        switch await httpClient.get(url) {
+        case .success(let data):
+            return try? decoder.decode(PokemonInfoDto.self, from: data)
+
+        case .failure:
+            return nil
+        }
+    }
+
+    // MARK: - /pokemon-species
 
     internal func pokemonSpecies(nationalDexId: Int) async -> PokemonSpeciesInfoDto? {
         let url = baseUrl
