@@ -3,6 +3,8 @@ import Data
 
 internal protocol PokeAPIQueryable {
     func pokemon(nationalDexId: Int) async -> PokemonInfoDto?
+    func pokemon(name: String) async -> PokemonInfoDto?
+
     func pokemonSpecies(nationalDexId: Int) async -> PokemonSpeciesInfoDto?
 }
 
