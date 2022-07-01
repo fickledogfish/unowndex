@@ -1,14 +1,16 @@
 import Foundation
 import Data
 
-internal protocol PokeAPIQueryable {
+internal protocol PokemonQueryable {
     func pokemon(nationalDexId: Int) async -> PokemonInfoDto?
     func pokemon(name: String) async -> PokemonInfoDto?
+}
 
+internal protocol PokemonSpeciesQueryable {
     func pokemonSpecies(nationalDexId: Int) async -> PokemonSpeciesInfoDto?
 }
 
-internal struct PokeAPI: PokeAPIQueryable {
+internal struct PokeAPI {
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
 
     private let httpClient: HttpGettable
@@ -21,9 +23,11 @@ internal struct PokeAPI: PokeAPIQueryable {
         self.httpClient = httpClient
         self.decoder = decoder
     }
+}
 
-    // MARK: - /pokemon
+// MARK: - /pokemon
 
+extension PokeAPI: PokemonQueryable {
     internal func pokemon(nationalDexId: Int) async -> PokemonInfoDto? {
         let url = baseUrl
             .appendingPathComponent("pokemon")
@@ -51,9 +55,11 @@ internal struct PokeAPI: PokeAPIQueryable {
             return nil
         }
     }
+}
 
-    // MARK: - /pokemon-species
+// MARK: - /pokemon-species
 
+extension PokeAPI: PokemonSpeciesQueryable {
     internal func pokemonSpecies(nationalDexId: Int) async -> PokemonSpeciesInfoDto? {
         let url = baseUrl
             .appendingPathComponent("pokemon-species")

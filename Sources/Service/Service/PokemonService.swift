@@ -5,13 +5,15 @@ public protocol PokemonServiceable {
 }
 
 public struct PokemonService: PokemonServiceable {
-    private let api: PokeAPIQueryable
+    typealias Queryable = PokemonQueryable & PokemonSpeciesQueryable
+
+    private let api: Queryable
 
     public init() {
         self.init(PokeAPI())
     }
 
-    internal init(_ api: PokeAPIQueryable) {
+    internal init(_ api: Queryable) {
         self.api = api
     }
 
