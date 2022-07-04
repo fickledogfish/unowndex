@@ -19,9 +19,7 @@ final class PokeAPIPokemonTests: XCTestCase {
         }
 
         httpClientMock.getWith = { _ in
-            // swiftlint:disable force_try
-            .success(try! JSONEncoder().encode(SampleData.pokemonInfoDto))
-            // swiftlint:enable force_try
+            .success(SampleData.pokemonInfoDto.asJSONData)
         }
 
         sut = PokeAPI(
@@ -120,9 +118,7 @@ final class PokeAPIPokemonSpeciesTests: XCTestCase {
         }
 
         httpClientMock.getWith = { _ in
-            // swiftlint:disable force_try
-            .success(try! JSONEncoder().encode(SampleData.pokemonSpeciesInfoDto))
-            // swiftlint:enable force_try
+            .success(SampleData.pokemonSpeciesInfoDto.asJSONData)
         }
 
         sut = PokeAPI(
