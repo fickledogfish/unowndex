@@ -1,5 +1,5 @@
 public enum PokemonGame: String, CaseIterable {
-    case blue, green, yellow
+    case red, blue, green, yellow
 
     case gold, silver, crystal
 
@@ -16,5 +16,6 @@ public enum PokemonGame: String, CaseIterable {
     case x, y
     // swiftlint:enable identifier_name
     case omegaRuby = "omega-ruby", alphaSaphire = "alpha-saphire"
+
     case legendsArceus = "legends-arceus"
 }
