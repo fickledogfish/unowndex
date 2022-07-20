@@ -3,7 +3,7 @@ import Foundation
 import Data
 
 internal struct PokeAPI {
-    private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
+    private static let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
 
     private let httpClient: HttpGettable
     private let decoder: Decoder
@@ -25,9 +25,11 @@ internal protocol PokemonQueryable {
 }
 
 extension PokeAPI: PokemonQueryable {
+    private static let pokemonUrl = baseUrl
+        .appendingPathComponent("pokemon")
+
     internal func pokemon(nationalDexId: Int) async -> PokemonInfoDto? {
-        let url = baseUrl
-            .appendingPathComponent("pokemon")
+        let url = Self.pokemonUrl
             .appendingPathComponent(String(nationalDexId))
 
         switch await httpClient.get(url) {
@@ -40,8 +42,7 @@ extension PokeAPI: PokemonQueryable {
     }
 
     internal func pokemon(name: String) async -> PokemonInfoDto? {
-        let url = baseUrl
-            .appendingPathComponent("pokemon")
+        let url = Self.pokemonUrl
             .appendingPathComponent(name)
 
         switch await httpClient.get(url) {
@@ -61,9 +62,11 @@ internal protocol PokemonSpeciesQueryable {
 }
 
 extension PokeAPI: PokemonSpeciesQueryable {
+    private static let pokemonSpeciesUrl = baseUrl
+        .appendingPathComponent("pokemon-species")
+
     internal func pokemonSpecies(nationalDexId: Int) async -> PokemonSpeciesInfoDto? {
-        let url = baseUrl
-            .appendingPathComponent("pokemon-species")
+        let url = Self.pokemonSpeciesUrl
             .appendingPathComponent(String(nationalDexId))
 
         switch await httpClient.get(url) {
