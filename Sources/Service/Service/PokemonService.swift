@@ -4,8 +4,8 @@ public protocol PokemonServiceable {
     func info(nationalDexId: Int) async -> PokemonInfo?
 }
 
-public struct PokemonService: PokemonServiceable {
-    typealias Queryable = PokemonQueryable & PokemonSpeciesQueryable
+public struct PokemonService {
+    internal typealias Queryable = PokemonQueryable & PokemonSpeciesQueryable
 
     private let api: Queryable
 
@@ -16,7 +16,9 @@ public struct PokemonService: PokemonServiceable {
     internal init(_ api: Queryable) {
         self.api = api
     }
+}
 
+extension PokemonService: PokemonServiceable {
     public func info(nationalDexId: Int) async -> PokemonInfo? {
         guard
             let pokemonDto = await api.pokemon(nationalDexId: nationalDexId)
